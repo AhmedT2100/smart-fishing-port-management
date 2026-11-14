@@ -1,5 +1,18 @@
 # Qt Creator / build artifacts
 build/
+build-*/
+debug/
+release/
+CMakeFiles/
+CMakeCache.txt
+.qmake.stash
+*.a
+*.so
+*.so.*
+*.d
+*.pdb
+*.ilk
+*.log
 .qtc_clangd/
 .qtcreator/
 *.pro.user*
