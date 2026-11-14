@@ -1,0 +1,27 @@
+# Qt Creator / build artifacts
+build/
+.qtc_clangd/
+.qtcreator/
+*.pro.user*
+*.user
+*.autosave
+Makefile*
+*.o
+*.obj
+moc_*
+ui_*
+qrc_*
+*.exe
+*.dll
+*.app/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# OS
+.DS_Store
+Thumbs.db
