@@ -17,16 +17,36 @@ These are existing code paths, not a guarantee that every integration is operati
 
 | Layer | Files / technology |
 | --- | --- |
-| Entry point and connection | `main.cpp`, `connexion.cpp/.h`; startup requires a successful QODBC connection |
-| Desktop presentation | `fishingport.cpp/.h/.ui`; Qt Widgets, Designer, Charts, PrintSupport |
+| Entry point and connection | `src/app/main.cpp`, `src/database/connexion.cpp/.h`; startup requires a successful QODBC connection |
+| Desktop presentation | `src/app/fishingport.cpp/.h`, `ui/fishingport.ui`; Qt Widgets, Designer, Charts, PrintSupport |
 | Business and persistence | `bateau`, `emplacement`, `quai`, `sortie`, `employe` C++ modules; SQL queries against Oracle |
-| Hardware bridge | `arduino.cpp/.h`; Qt SerialPort at 9600 baud |
+| Hardware bridge | `src/hardware/arduino.cpp/.h`; Qt SerialPort at 9600 baud |
 | Remote services | Qt Network; optional Twilio, EmailJS, and local Ollama |
-| Assets | `resources.qrc`, `icons/`, `styles/theme.qss` |
-| Firmware | `arduino_pir/`, `arduino_rfid/`, `inchirah+yasmine.ino/sketch_may4a/` |
+| Assets | `resources/resources.qrc`, `resources/icons/`, `resources/styles/theme.qss` |
+| Firmware | `firmware/pir_alarm/`, `firmware/rfid_reader/`, `firmware/dock_barrier/` |
 | Build | qmake project `gestion_bateaux.pro`; C++17 and Qt 6 |
 
 The main window coordinates the domain modules, SQL models, network requests, and serial communication. Arduino sketches run separately on their boards; they are not compiled into the desktop application.
+
+## Repository layout
+
+```text
+src/
+  app/           Application entry point and main-window controller
+  database/      ODBC connection lifecycle
+  models/        Boats, berths, docks, departures, and employees
+  hardware/      Desktop serial bridge
+ui/              Qt Designer forms
+resources/       Resource collection, icons, and stylesheets
+firmware/
+  dock_barrier/  LCD, servo, and status LEDs
+  pir_alarm/     Motion sensor, LED, and buzzer
+  rfid_reader/   MFRC522 badge reader
+scripts/         Dependency-free structural validation
+docs/           Validation history and hardware setup
+```
+
+See [firmware setup](docs/HARDWARE.md), [contribution guidance](CONTRIBUTING.md), and [release history](CHANGELOG.md).
 
 ## Prerequisites
 
@@ -58,7 +78,7 @@ Missing optional service variables prevent the corresponding request. Configure 
 
 ## Build and run
 
-Clone this private repository with an account that has access, then use a Qt 6 kit:
+Clone the repository, then use a Qt 6 kit:
 
 ```sh
 git clone https://github.com/AhmedT2100/smart-fishing-port-management.git
@@ -80,9 +100,9 @@ Flash each sketch separately to its intended board; review its pin definitions a
 
 | Sketch | Hardware / libraries | Protocol |
 | --- | --- | --- |
-| `arduino_rfid/arduino_rfid.ino` | MFRC522 reader; SPI and MFRC522 library; SS 10, RST 9 | Emits `CODE:<UID>`; `GET` requests the last UID |
-| `arduino_pir/arduino_pir.ino` | PIR on 8, LED on 2, buzzer on 7 | Emits `MOTION` / `TIMEOUT`; accepts `OK`, `ALERT`, `RESET`, `ERR` |
-| `inchirah+yasmine.ino/sketch_may4a/sketch_may4a.ino` | Wire, LiquidCrystal_I2C, Servo; LCD 0x27, LEDs 2/3, servo 9 | `1` opens the barrier; `0` closes it |
+| `firmware/rfid_reader/rfid_reader.ino` | MFRC522 reader; SPI and MFRC522 library; SS 10, RST 9 | Emits `CODE:<UID>`; `GET` requests the last UID |
+| `firmware/pir_alarm/pir_alarm.ino` | PIR on 8, LED on 2, buzzer on 7 | Emits `MOTION` / `TIMEOUT`; accepts `OK`, `ALERT`, `RESET`, `ERR` |
+| `firmware/dock_barrier/dock_barrier.ino` | Wire, LiquidCrystal_I2C, Servo; LCD 0x27, LEDs 2/3, servo 9 | `1` opens the barrier; `0` closes it |
 
 Do not open the same serial port in Arduino Serial Monitor and the application simultaneously. Firmware compilation and physical wiring must be verified on the target boards.
 
@@ -92,7 +112,7 @@ No screenshots were supplied in the archive. The original Designer form, stylesh
 
 ## Validation and known limitations
 
-See [docs/VALIDATION.md](docs/VALIDATION.md) for checks performed on this import. A successful application build is **not claimed**.
+Run `python3 scripts/check_project.py` for structural checks. See [docs/VALIDATION.md](docs/VALIDATION.md) for the checks performed and their limits. A successful application build is **not claimed**.
 
 - The available environment lacks a working Qt SDK/qmake and Arduino CLI. Compilation, GUI behavior, database operations, live messaging, Ollama, and physical hardware have not been tested.
 - No database schema, migrations, seed data, or automated functional tests were supplied.
@@ -109,4 +129,4 @@ This is a team project. The supplied README credits **Ahmed Saadaoui** with the 
 
 Database, SMS, email-service, and authorized-badge configuration belong in the local process environment. Message payloads and reset codes are not deliberately logged in the cleaned paths. This source review is not a security audit; review remaining diagnostics and access controls before using real data. The supplied README reports earlier credential exposure; any previously exposed credentials should be revoked or rotated by their owners.
 
-No license file was supplied. Copyright remains with the respective owners; no open-source license is implied. This repository remains private, and this import does not publish a release.
+No license file was supplied. Copyright remains with the respective owners; no open-source license is implied. The repository is public. Source releases document their validation status; no successful application build or production readiness is implied.

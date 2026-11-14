@@ -3,35 +3,39 @@ QT += core gui widgets sql network printsupport charts serialport
 lessThan(QT_MAJOR_VERSION, 6): error("This project requires Qt 6.")
 
 CONFIG += c++17
+TARGET = gestion_bateaux
+
+INCLUDEPATH += $$PWD/src/app $$PWD/src/database $$PWD/src/models $$PWD/src/hardware
+DEPENDPATH += $$INCLUDEPATH
 msvc: QMAKE_CXXFLAGS += /utf-8
 else: QMAKE_CXXFLAGS += -finput-charset=UTF-8 -fexec-charset=UTF-8
 
 SOURCES += \
-    arduino.cpp \
-    main.cpp \
-    connexion.cpp \
-    bateau.cpp \
-    emplacement.cpp \
-    quai.cpp \
-    sortie.cpp \
-    employe.cpp \
-    fishingport.cpp
+    src/hardware/arduino.cpp \
+    src/app/main.cpp \
+    src/database/connexion.cpp \
+    src/models/bateau.cpp \
+    src/models/emplacement.cpp \
+    src/models/quai.cpp \
+    src/models/sortie.cpp \
+    src/models/employe.cpp \
+    src/app/fishingport.cpp
 
 HEADERS += \
-    arduino.h \
-    connexion.h \
-    bateau.h \
-    emplacement.h \
-    quai.h \
-    sortie.h \
-    employe.h \
-    fishingport.h
+    src/hardware/arduino.h \
+    src/database/connexion.h \
+    src/models/bateau.h \
+    src/models/emplacement.h \
+    src/models/quai.h \
+    src/models/sortie.h \
+    src/models/employe.h \
+    src/app/fishingport.h
 
 FORMS += \
-    fishingport.ui
+    ui/fishingport.ui
 
 RESOURCES += \
-    resources.qrc
+    resources/resources.qrc
 
 # Default rules for deployment
 qnx: target.path = /tmp/${TARGET}/bin
