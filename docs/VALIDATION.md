@@ -31,3 +31,11 @@ Compiler UTF-8 flags are selected for MSVC versus GCC/MinGW. A Qt 6 requirement 
 - **Security behavior:** authentication, authorization, badge binding, reset-code lifetime, and all remaining diagnostics require a dedicated review. Existing plaintext password handling and demo login assumptions are documented limitations, not resolved by moving service configuration.
 
 No screenshots were fabricated. No release or public deployment is part of this import.
+
+## Repository organization — v0.2.0
+
+The repository is now public. Sources are grouped by role under `src/`, Designer forms under `ui/`, resources under `resources/`, and firmware under `firmware/`. The former personal-name sketch is now `firmware/dock_barrier/dock_barrier.ino`; the other sketches are `pir_alarm` and `rfid_reader`.
+
+`python3 scripts/check_project.py` passes for the new structure: 9 sources, 8 headers, 1 form, 1 QRC collection, valid XML, 15 literal runtime resource references, local include resolution through the declared include paths, and three Arduino sketches with matching directory names. Moved application sources, headers, firmware, and assets were compared byte for byte with the prior version; their contents are unchanged. Runtime resource aliases and executable name are preserved. Git whitespace checks pass.
+
+qmake still cannot execute because the installed launcher has no Qt SDK behind it. The earlier compilation and integration limitations still apply. The organization work does not establish build success or production readiness.
