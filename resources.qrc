@@ -1,0 +1,25 @@
+<RCC>
+  <qresource prefix="/">
+    <file>styles/theme.qss</file>
+  </qresource>
+  <qresource prefix="/icons">
+    <file alias="dashboard.svg">icons/modern/dashboard.svg</file>
+    <file alias="boat.svg">icons/modern/boat.svg</file>
+    <file alias="anchor.svg">icons/modern/anchor.svg</file>
+    <file alias="dock.svg">icons/modern/dock.svg</file>
+    <file alias="route.svg">icons/modern/route.svg</file>
+    <file alias="users.svg">icons/modern/users.svg</file>
+    <file alias="hardware.svg">icons/modern/hardware.svg</file>
+    <file alias="eye.svg">icons/modern/eye.svg</file>
+    <file alias="eye-off.svg">icons/modern/eye-off.svg</file>
+    <file alias="logo.svg">icons/modern/logo.svg</file>
+    <file alias="settings.svg">icons/settings.svg</file>
+    <file alias="search.svg">icons/search.svg</file>
+    <file alias="refresh.svg">icons/refresh-cw.svg</file>
+    <file alias="activity.svg">icons/activity.svg</file>
+    <file alias="database.svg">icons/database.svg</file>
+    <file alias="check-circle.svg">icons/check-circle.svg</file>
+    <file alias="alert-triangle.svg">icons/alert-triangle.svg</file>
+    <file alias="logout.svg">icons/log-out.svg</file>
+  </qresource>
+</RCC>

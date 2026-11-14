@@ -1,9 +1,10 @@
 QT += core gui widgets sql network printsupport charts serialport
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+lessThan(QT_MAJOR_VERSION, 6): error("This project requires Qt 6.")
 
 CONFIG += c++17
-QMAKE_CXXFLAGS += -finput-charset=UTF-8 -fexec-charset=UTF-8
+msvc: QMAKE_CXXFLAGS += /utf-8
+else: QMAKE_CXXFLAGS += -finput-charset=UTF-8 -fexec-charset=UTF-8
 
 SOURCES += \
     arduino.cpp \

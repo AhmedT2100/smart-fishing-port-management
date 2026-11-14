@@ -19,7 +19,7 @@ bool Connexion::ouvrirConnexion()
         qDebug() << "Connexion réussie à la base de données !";
         return true;
     } else {
-        qDebug() << "Échec de la connexion :" << db.lastError().text();
+        qWarning() << "Database connection failed. Check local ODBC configuration.";
         return false;
     }
 }
